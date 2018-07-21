@@ -43,6 +43,7 @@ function newCard(e) {
     e.preventDefault();
     var title = $('.title-input').val();
     var body = $('.body-input').val();
+    var qualityVariable = $('.qualityVariable').val();
     var bottomBox = $('.bottom-box')
     bottomBox.prepend (`<div class="card-container">
             <h2 class="title-of-card">${title}</h2>
@@ -50,7 +51,7 @@ function newCard(e) {
             <p class="body-of-card">${body}</p>
             <button type="button" class="vote-button upvote" onclick="upvote(event)"></button>
             <button type="button" class="vote-button downvote" onclick="downvote(event)"><span </button>
-            <p class='quality-Variable'>Quality:</p>
+            <p class='qualityVariable'>Swill</p>
             <hr> 
             </div>`);
 };
