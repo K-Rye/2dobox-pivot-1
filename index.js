@@ -1,8 +1,28 @@
+
+// ================
+// Global Variables
+// ================
 var title = $('#title-input').val();
 var body = $('#body-input').val();
 var numCards = 0;
 var qualityVariable = "swill";
 
+$('.save-btn').on('click', function(event) {
+    event.preventDefault();
+    if ($('#title-input').val() === "" || $('#body-input').val() === "") {
+       return false;
+    };  
+
+    numCards++;
+    $( ".bottom-box" ).prepend(newCard('card' + numCards, $('#title-input').val(), $('#body-input').val(), qualityVariable)); 
+    localStoreCard();
+    $('form')[0].reset();
+});
+
+
+// =================
+// New Card Function
+// =================
 var newCard = function(id , title , body , quality) {
     return '<div id="' + id + '"class="card-container"><h2 class="title-of-card">'  
             + title +  '</h2>'
@@ -16,6 +36,10 @@ var newCard = function(id , title , body , quality) {
             + '</div>';
 };
 
+// ====================
+// Constructor Funtion
+// ====================
+
 function cardObject() {
     return {
         title: $('#title-input').val(),
@@ -24,28 +48,26 @@ function cardObject() {
     };
 }
 
-$.each(localStorage, function(key) {
-    var cardData = JSON.parse(this);
-    numCards++;
-    $( ".bottom-box" ).prepend(newCard(key, cardData.title, cardData.body, cardData.quality));
-});
-
+// =============================
+// Setting to local Storage
+// =============================
 var localStoreCard = function() {
     var cardString = JSON.stringify(cardObject());
     localStorage.setItem('card' + numCards  , cardString);
 }
 
-$('.save-btn').on('click', function(event) {
-    event.preventDefault();
-    if ($('#title-input').val() === "" || $('#body-input').val() === "") {
-       return false;
-    };  
+// ===============================
+// Retrieving from local Storage
+// ===============================
 
+$.each(localStorage, function(key) {
+    var cardData = JSON.parse(this);
     numCards++;
-    $( ".bottom-box" ).prepend(newCard('card' + numCards, $('#title-input').val(), $('#body-input').val(), qualityVariable)); 
-    localStoreCard();
-    $('form')[0].reset();
+    $( ".bottom-box" ).prepend(newCard(key, cardData.title, cardData.body, cardData.quality));
 });
+// =============================================
+// Quality Rating - Event Delegation
+// =============================================
 
 $(".bottom-box").on('click', function(event){
     var currentQuality = $($(event.target).siblings('p.quality').children()[0]).text().trim();
@@ -75,6 +97,10 @@ $(".bottom-box").on('click', function(event){
         } else if (event.target.className === "upvote" && currentQuality === "genius") {
             qualityVariable = "genius";
         }
+
+    // ======================================
+    // Update Quality in  Local Storage 
+    // ======================================
 
     var cardHTML = $(event.target).closest('.card-container');
     var cardHTMLId = cardHTML[0].id;
