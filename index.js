@@ -49,8 +49,8 @@ function newCard(e) {
             <button class="delete-button"></button>
             <p class="body-of-card">${body}</p>
             <button type="button" class="vote-button upvote" onclick="upvote(event)"></button>
-            <button type="button" class="vote-button downvote" onclick="downvote(event)"><span </button>
-            <p class='quality-Variable'>Quality:</p>
+            <button type="button" class="vote-button downvote" onclick="downvote(event)"></button>
+            <p class='quality'>quality:</p>
             <hr> 
             </div>`);
 };
