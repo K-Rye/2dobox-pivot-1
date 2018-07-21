@@ -2,13 +2,13 @@
 // ================
 // Global Variables
 // ================
+
 // var title = $('.title-input').val();
 // var body = $('.body-input').val();
 // var numCards = 0;
 // var qualityVariable = "swill";
 
 $('.save-btn').on('click', newCard)
-
 // $('.save-btn').on('click', function(event) {
 //     event.preventDefault();
 //     if ($('.title-input').val() === "" || $('.body-input').val() === "") {
@@ -25,6 +25,7 @@ $('.save-btn').on('click', newCard)
 // =================
 // New Card Function
 // =================
+
 // var newCard = function(id , title , body , quality) {
     // return '<div id="' + id + '"class="card-container"><h2 class="title-of-card">'  
     //         + title +  '</h2>'
@@ -137,11 +138,31 @@ function newCard(e) {
 //         localStorage.removeItem(cardHTMLId);
 //     }
 // });
-      
 
 
 
 
+function upvote(event) {
+  var qualityArray = ['Swill', 'probable', 'genius'];
+  var qualityOutput = $(event.target.parentNode).find('.qualityVariable').get(0)
+ if ($(qualityOutput).html() == qualityArray[0]) {
+   $(qualityOutput).html(qualityArray[1]);
+ } else if ($(qualityOutput).html() == qualityArray[1]) {
+   $(qualityOutput).html(qualityArray[2]);
+ }
+};
+
+
+
+function downvote(event) {
+  var qualityArray = ['Swill', 'probable', 'genius'];
+  var qualityOutput = $(event.target.parentNode).find('.qualityVariable').get(0)
+ if ($(qualityOutput).html() == qualityArray[2]) {
+  $(qualityOutput).html(qualityArray[1]);
+ } else if ($(qualityOutput).html() == qualityArray[1]) {
+  $(qualityOutput).html(qualityArray[0]); 
+ }
+};
 
 
 
