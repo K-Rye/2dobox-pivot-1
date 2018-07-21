@@ -8,7 +8,34 @@
 // var numCards = 0;
 // var qualityVariable = "swill";
 
-$('.save-btn').on('click', newCard)
+$('.save-btn').on('click', cardObject)
+
+
+function Idea(constrTitle, constrBody, quality) {
+  this.id = Date.now();
+  this.title = constrTitle;
+  this.body = constrBody;
+  this.quality = quality;
+};
+
+
+function cardObject(e) {
+e.preventDefault();
+    return {
+        title: $(idea.title).val(),
+        body: $(idea.body).val(),
+        quality: $(idea.quality).val()
+    };
+    localStoreCard();
+
+
+}
+
+var localStoreCard = function() {     
+  var cardString = JSON.stringify(cardObject(e));     
+  localStorage.setItem(idea.id  , cardString);
+  newCard();
+}
 // $('.save-btn').on('click', function(event) {
 //     event.preventDefault();
 //     if ($('.title-input').val() === "" || $('.body-input').val() === "") {
@@ -39,20 +66,23 @@ $('.save-btn').on('click', newCard)
     //         + '</div>';
 // };
 
-function newCard(e) {
-    e.preventDefault();
+
+
+
+function newCard(Idea) {
+    var id = Date.now();
     var title = $('.title-input').val();
     var body = $('.body-input').val();
     var qualityVariable = $('.qualityVariable').val();
     var bottomBox = $('.bottom-box')
-    bottomBox.prepend (`<div class="card-container">
-            <h2 class="title-of-card" contenteditable="true">${title}</h2>
+    bottomBox.prepend (`<div class="card-container" data-unid="${idea.id}">
+            <h2 class="title-of-card" contenteditable="true">${idea.title}</h2>
             <button class="delete-button" onclick="deleteIdea(event)"></button>
-            <p class="body-of-card" contenteditable="true">${body}</p>
+            <p class="body-of-card" contenteditable="true">${idea.body}</p>
             <button type="button" class="vote-button upvote" onclick="upvote(event)"></button>
             <button type="button" class="vote-button downvote" onclick="downvote(event)"></button>
             <p class='quality'>quality:</p>
-            <p class='qualityVariable'>swill</p>
+            <p class='qualityVariable'>${idea.quality}</p>
             <hr> 
             </div>`);
 };
@@ -61,18 +91,14 @@ function newCard(e) {
 // Constructor Funtion
 // ====================
 
-// function cardObject() {
-//     return {
-//         title: $('.title-input').val(),
-//         body: $('.body-input').val(),
-//         quality: qualityVariable
-//     };
-// }
+
 
 // ============================= // Setting to local Storage //
-var localStoreCard = function() {     var
-cardString = JSON.stringify(cardObject());     localStorage.setItem('card' +
-numCards  , cardString); }
+
+
+var parseIdea =  function() {
+  localStorage.getItem()
+}
 
 // ===============================
 // Retrieving from local Storage
