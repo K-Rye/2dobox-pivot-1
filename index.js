@@ -2,19 +2,19 @@
 // ================
 // Global Variables
 // ================
-var title = $('#title-input').val();
-var body = $('#body-input').val();
+var title = $('.title-input').val();
+var body = $('.body-input').val();
 var numCards = 0;
 var qualityVariable = "swill";
 
 $('.save-btn').on('click', function(event) {
     event.preventDefault();
-    if ($('#title-input').val() === "" || $('#body-input').val() === "") {
+    if ($('.title-input').val() === "" || $('.body-input').val() === "") {
        return false;
     };  
 
     numCards++;
-    $( ".bottom-box" ).prepend(newCard('card' + numCards, $('#title-input').val(), $('#body-input').val(), qualityVariable)); 
+    $( ".bottom-box" ).prepend(newCard('card' + numCards, $('.title-input').val(), $('.body-input').val(), qualityVariable)); 
     localStoreCard();
     $('form')[0].reset();
 });
@@ -42,8 +42,8 @@ var newCard = function(id , title , body , quality) {
 
 function cardObject() {
     return {
-        title: $('#title-input').val(),
-        body: $('#body-input').val(),
+        title: $('.title-input').val(),
+        body: $('.body-input').val(),
         quality: qualityVariable
     };
 }
