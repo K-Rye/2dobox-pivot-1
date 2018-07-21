@@ -5,30 +5,14 @@
 var title = $('.title-input').val();
 var body = $('.body-input').val();
 var numCards = 0;
-var qualityVariable = "swill";
+var qualityVariable = "Swill";
 
 $('.save-btn').on('click', function(event) {
     event.preventDefault();
-    noIdea();
 
-    // if ($('.title-input').val() === "" || $('.body-input').val() === "") {
-    //    return false;
-    // };
-
-
-
-
-var noIdea = function() {
-      if ($('.title-input').val() === "" || $('.body-input').val() === "") {
+    if ($('.title-input').val() === "" || $('.body-input').val() === "") {
        return false;
-    };  
-};
-
-
-
-
-
-
+    };
 
 
     numCards++;
@@ -47,8 +31,8 @@ var newCard = function(id , title , body , quality) {
             + '<button class="delete-button"></button>'
             +'<p class="body-of-card">'
             + body + '</p>'
-            + '<button class="upvote"></button>' 
-            + '<button class="downvote"></button>' 
+            + '<button onclick="upvote(event)" class="upvote"></button>' 
+            + '<button onclick="downvote(event)" class="downvote"></button>' 
             + '<p class="quality">' + 'quality:' + '<span class="qualityVariable">' + quality + '</span>' + '</p>'
             + '<hr>' 
             + '</div>';
@@ -87,57 +71,79 @@ $.each(localStorage, function(key) {
 // Quality Rating - Event Delegation
 // =============================================
 
-$(".bottom-box").on('click', function(event){
-    var currentQuality = $($(event.target).siblings('p.quality').children()[0]).text().trim();
-    var qualityVariable;
+// $(".bottom-box").on('click', function(event){
+//     var currentQuality = $($(event.target).siblings('p.quality').children()[0]).text().trim();
+//     var qualityVariable;
 
-    if (event.target.className === "upvote" || event.target.className === "downvote"){
+//     if (event.target.className === "upvote" || event.target.className === "downvote"){
 
-        if (event.target.className === "upvote" && currentQuality === "plausible"){
-            qualityVariable = "genius";
-            $($(event.target).siblings('p.quality').children()[0]).text(qualityVariable);
+//         if (event.target.className === "upvote" && currentQuality === "plausible"){
+//             qualityVariable = "genius";
+//             $($(event.target).siblings('p.quality').children()[0]).text(qualityVariable);
                
-        } else if (event.target.className === "upvote" && currentQuality === "swill") {
-            qualityVariable = "plausible";
-            $($(event.target).siblings('p.quality').children()[0]).text(qualityVariable);
+//         } else if (event.target.className === "upvote" && currentQuality === "swill") {
+//             qualityVariable = "plausible";
+//             $($(event.target).siblings('p.quality').children()[0]).text(qualityVariable);
                
-        } else if (event.target.className === "downvote" && currentQuality === "plausible") {
-            qualityVariable = "swill"
-            $($(event.target).siblings('p.quality').children()[0]).text(qualityVariable);
+//         } else if (event.target.className === "downvote" && currentQuality === "plausible") {
+//             qualityVariable = "swill"
+//             $($(event.target).siblings('p.quality').children()[0]).text(qualityVariable);
 
-        } else if (event.target.className === "downvote" && currentQuality === "genius") {
-            qualityVariable = "plausible"
-            $($(event.target).siblings('p.quality').children()[0]).text(qualityVariable);
+//         } else if (event.target.className === "downvote" && currentQuality === "genius") {
+//             qualityVariable = "plausible"
+//             $($(event.target).siblings('p.quality').children()[0]).text(qualityVariable);
 
-        } else if (event.target.className === "downvote" && currentQuality === "swill") {
-            qualityVariable = "swill";
+//         } else if (event.target.className === "downvote" && currentQuality === "swill") {
+//             qualityVariable = "swill";
         
-        } else if (event.target.className === "upvote" && currentQuality === "genius") {
-            qualityVariable = "genius";
-        }
+//         } else if (event.target.className === "upvote" && currentQuality === "genius") {
+//             qualityVariable = "genius";
+//         }
 
     // ======================================
     // Update Quality in  Local Storage 
     // ======================================
 
-    var cardHTML = $(event.target).closest('.card-container');
-    var cardHTMLId = cardHTML[0].id;
-    var cardObjectInJSON = localStorage.getItem(cardHTMLId);
-    var cardObjectInJS = JSON.parse(cardObjectInJSON);
+//     var cardHTML = $(event.target).closest('.card-container');
+//     var cardHTMLId = cardHTML[0].id;
+//     var cardObjectInJSON = localStorage.getItem(cardHTMLId);
+//     var cardObjectInJS = JSON.parse(cardObjectInJSON);
 
-    cardObjectInJS.quality = qualityVariable;
+//     cardObjectInJS.quality = qualityVariable;
 
-    var newCardJSON = JSON.stringify(cardObjectInJS);
-    localStorage.setItem(cardHTMLId, newCardJSON);
-    }
+//     var newCardJSON = JSON.stringify(cardObjectInJS);
+//     localStorage.setItem(cardHTMLId, newCardJSON);
+//     }
    
-    else if (event.target.className === "delete-button") {
-        var cardHTML = $(event.target).closest('.card-container').remove();
-        var cardHTMLId = cardHTML[0].id;
-        localStorage.removeItem(cardHTMLId);
-    }
-});
-      
+//     else if (event.target.className === "delete-button") {
+//         var cardHTML = $(event.target).closest('.card-container').remove();
+//         var cardHTMLId = cardHTML[0].id;
+//         localStorage.removeItem(cardHTMLId);
+//     }
+// });
+
+
+
+function upvote(event) {
+  var qualityArray = ['Swill', 'probable', 'genius'];
+  var qualityOutput = $(event.target.parentNode).find('.qualityVariable').get(0)
+ if ($(qualityOutput).html() == qualityArray[0]) {
+   $(qualityOutput).html(qualityArray[1]);
+ } else if ($(qualityOutput).html() == qualityArray[1]) {
+   $(qualityOutput).html(qualityArray[2]);
+ }
+};
+
+
+function downvote(event) {
+  var qualityArray = ['Swill', 'probable', 'genius'];
+  var qualityOutput = $(event.target.parentNode).find('.qualityVariable').get(0)
+ if ($(qualityOutput).html() == qualityArray[2]) {
+  $(qualityOutput).html(qualityArray[1]);
+ } else if ($(qualityOutput).html() == qualityArray[1]) {
+  $(qualityOutput).html(qualityArray[0]); 
+ }
+};
 
 
 
