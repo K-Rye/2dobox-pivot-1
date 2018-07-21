@@ -47,7 +47,7 @@ function newCard(e) {
     var bottomBox = $('.bottom-box')
     bottomBox.prepend (`<div class="card-container">
             <h2 class="title-of-card">${title}</h2>
-            <button class="delete-button"></button>
+            <button class="delete-button" onclick="deleteIdea(event)"></button>
             <p class="body-of-card">${body}</p>
             <button type="button" class="vote-button upvote" onclick="upvote(event)"></button>
             <button type="button" class="vote-button downvote" onclick="downvote(event)"><span </button>
@@ -154,7 +154,6 @@ function upvote(event) {
 };
 
 
-
 function downvote(event) {
   var qualityArray = ['Swill', 'probable', 'genius'];
   var qualityOutput = $(event.target.parentNode).find('.qualityVariable').get(0)
@@ -165,6 +164,13 @@ function downvote(event) {
  }
 };
 
+
+function deleteIdea(event) {
+  var ideaTarget = event.target.parentNode;
+  // var ideaD = $(event.target).parent().data("unid")
+  ideaTarget.parentNode.removeChild(ideaTarget);
+  // localStorage.removeItem(ideaD);
+};
 
 
 
