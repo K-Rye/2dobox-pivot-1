@@ -50,8 +50,9 @@ function newCard(e) {
             <button class="delete-button" onclick="deleteIdea(event)"></button>
             <p class="body-of-card" contenteditable="true">${body}</p>
             <button type="button" class="vote-button upvote" onclick="upvote(event)"></button>
-            <button type="button" class="vote-button downvote" onclick="downvote(event)"><span </button>
-            <p class='qualityVariable'>Swill</p>
+            <button type="button" class="vote-button downvote" onclick="downvote(event)"></button>
+            <p class='quality'>quality:</p>
+            <p class='qualityVariable'>swill</p>
             <hr> 
             </div>`);
 };
