@@ -9,9 +9,27 @@ var qualityVariable = "swill";
 
 $('.save-btn').on('click', function(event) {
     event.preventDefault();
-    if ($('.title-input').val() === "" || $('.body-input').val() === "") {
+    noIdea();
+
+    // if ($('.title-input').val() === "" || $('.body-input').val() === "") {
+    //    return false;
+    // };
+
+
+
+
+var noIdea = function() {
+      if ($('.title-input').val() === "" || $('.body-input').val() === "") {
        return false;
     };  
+};
+
+
+
+
+
+
+
 
     numCards++;
     $( ".bottom-box" ).prepend(newCard('card' + numCards, $('.title-input').val(), $('.body-input').val(), qualityVariable)); 
@@ -120,10 +138,6 @@ $(".bottom-box").on('click', function(event){
     }
 });
       
-
-
-
-
 
 
 
