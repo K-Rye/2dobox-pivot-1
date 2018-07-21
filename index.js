@@ -142,7 +142,7 @@ numCards  , cardString); }
 
 
 function upvote(event) {
-  var qualityArray = ['Swill', 'probable', 'genius'];
+  var qualityArray = ['swill', 'probable', 'genius'];
   var qualityOutput = $(event.target.parentNode).find('.qualityVariable').get(0)
  if ($(qualityOutput).html() == qualityArray[0]) {
    $(qualityOutput).html(qualityArray[1]);
@@ -153,7 +153,7 @@ function upvote(event) {
 
 
 function downvote(event) {
-  var qualityArray = ['Swill', 'probable', 'genius'];
+  var qualityArray = ['swill', 'probable', 'genius'];
   var qualityOutput = $(event.target.parentNode).find('.qualityVariable').get(0)
  if ($(qualityOutput).html() == qualityArray[2]) {
   $(qualityOutput).html(qualityArray[1]);
