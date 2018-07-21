@@ -43,14 +43,15 @@ function newCard(e) {
     e.preventDefault();
     var title = $('.title-input').val();
     var body = $('.body-input').val();
+    var qualityVariable = $('.qualityVariable').val();
     var bottomBox = $('.bottom-box')
     bottomBox.prepend (`<div class="card-container">
-            <h2 class="title-of-card">${title}</h2>
-            <button class="delete-button"></button>
-            <p class="body-of-card">${body}</p>
+            <h2 class="title-of-card" contenteditable="true">${title}</h2>
+            <button class="delete-button" onclick="deleteIdea(event)"></button>
+            <p class="body-of-card" contenteditable="true">${body}</p>
             <button type="button" class="vote-button upvote" onclick="upvote(event)"></button>
-            <button type="button" class="vote-button downvote" onclick="downvote(event)"></button>
-            <p class='quality'>quality:</p>
+            <button type="button" class="vote-button downvote" onclick="downvote(event)"><span </button>
+            <p class='qualityVariable'>Swill</p>
             <hr> 
             </div>`);
 };
@@ -67,13 +68,10 @@ function newCard(e) {
 //     };
 // }
 
-// =============================
-// Setting to local Storage
-// =============================
-// var localStoreCard = function() {
-//     var cardString = JSON.stringify(cardObject());
-//     localStorage.setItem('card' + numCards  , cardString);
-// }
+// ============================= // Setting to local Storage //
+var localStoreCard = function() {     var
+cardString = JSON.stringify(cardObject());     localStorage.setItem('card' +
+numCards  , cardString); }
 
 // ===============================
 // Retrieving from local Storage
@@ -153,7 +151,6 @@ function upvote(event) {
 };
 
 
-
 function downvote(event) {
   var qualityArray = ['Swill', 'probable', 'genius'];
   var qualityOutput = $(event.target.parentNode).find('.qualityVariable').get(0)
@@ -164,6 +161,11 @@ function downvote(event) {
  }
 };
 
+
+function deleteIdea(event) {
+  var ideaTarget = event.target.parentNode;
+  ideaTarget.parentNode.removeChild(ideaTarget);
+};
 
 
 
