@@ -46,9 +46,9 @@ function newCard(e) {
     var qualityVariable = $('.qualityVariable').val();
     var bottomBox = $('.bottom-box')
     bottomBox.prepend (`<div class="card-container">
-            <h2 class="title-of-card">${title}</h2>
+            <h2 class="title-of-card" contenteditable="true">${title}</h2>
             <button class="delete-button" onclick="deleteIdea(event)"></button>
-            <p class="body-of-card">${body}</p>
+            <p class="body-of-card" contenteditable="true">${body}</p>
             <button type="button" class="vote-button upvote" onclick="upvote(event)"></button>
             <button type="button" class="vote-button downvote" onclick="downvote(event)"><span </button>
             <p class='qualityVariable'>Swill</p>
@@ -68,13 +68,10 @@ function newCard(e) {
 //     };
 // }
 
-// =============================
-// Setting to local Storage
-// =============================
-// var localStoreCard = function() {
-//     var cardString = JSON.stringify(cardObject());
-//     localStorage.setItem('card' + numCards  , cardString);
-// }
+// ============================= // Setting to local Storage //
+var localStoreCard = function() {     var
+cardString = JSON.stringify(cardObject());     localStorage.setItem('card' +
+numCards  , cardString); }
 
 // ===============================
 // Retrieving from local Storage
@@ -167,9 +164,7 @@ function downvote(event) {
 
 function deleteIdea(event) {
   var ideaTarget = event.target.parentNode;
-  // var ideaD = $(event.target).parent().data("unid")
   ideaTarget.parentNode.removeChild(ideaTarget);
-  // localStorage.removeItem(ideaD);
 };
 
 
