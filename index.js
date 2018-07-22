@@ -8,30 +8,39 @@
 // var numCards = 0;
 // var qualityVariable = "swill";
 
-$('.save-btn').on('click', newCard)
+$('.save-btn').on('click', createIdea)
+
+// function createIdea(e) {
+//   e.preventDefault();
+//   var titleInput = titleInput.val();
+//   var bodyInput = bodyInput.val();
+//   var newIdea = new Idea(newTitle, newBody)
+//   arrayOfObject.push(newIdea);
+//   stringAndStore(Idea);
+//   newCard();
+// };
+
 
 function createIdea(e) {
   e.preventDefault();
-  var 
-}
-
-
-
-function createIdea(e) {
-  e.preventDefault();
-  var newTitle = titleInput.val();
-  var newBody = bodyInput.val();
-  var newIdea = new IdeaObject(newTitle, newBody)
-  arrayOfObject.push(newIdea);
-  stringAndStore(arrayOfObject);
-  displayIdeas();
+  var titleInput = $('title-input').val();
+  var bodyInput = $('body-input').val();
+  var newIdea = new Idea(titleInput, bodyInput)
+  setIdea(Idea);
+  newCard();
 };
 
-function cardObject() {
-        title: $('.title-input').val(),
-        body: $('.body-input').val(),
-        quality: qualityVariable
-    };
+function Idea(titleInput, bodyInput) {
+  this.titleInput = titleInput;
+  this.bodyInput = bodyInput;
+  this.id = date.now();
+};
+
+// function cardObject() {
+//         title: $('.title-input').val(),
+//         body: $('.body-input').val(),
+//         quality: qualityVariable
+//     };
 
 // $('.save-btn').on('click', function(event) {
 //     event.preventDefault();
@@ -65,24 +74,44 @@ function cardObject() {
 
 function newCard(e) {
     e.preventDefault();
-    var title = $('.title-input').val();
-    var body = $('.body-input').val();
-    var qualityVariable = $('.qualityVariable').val();
-    var bottomBox = $('.bottom-box')
+    var getIdea = localStorage.getItem('stringIdea');
+    var parseGetIdea = JSON.parse(getIdea);
+    var bottomBox = $('.bottom-box');
     bottomBox.prepend (`<div class="card-container">
-            <h2 class="title-of-card" contenteditable="true">${title}</h2>
+            <h2 class="title-of-card" contenteditable="true">${idea.titleInput}</h2>
             <button class="delete-button" onclick="deleteIdea(event)"></button>
-            <p class="body-of-card" contenteditable="true">${body}</p>
+            <p class="body-of-card" contenteditable="true">${idea.bodyInput}</p>
             <button type="button" class="vote-button upvote" onclick="upvote(event)"></button>
             <button type="button" class="vote-button downvote" onclick="downvote(event)"></button>
             <p class='quality'>quality:</p>
             <p class='qualityVariable'>swill</p>
             <hr> 
             </div>`);
-
-    title.val('');
-    body.val('');
+    titleInput.val('');
+    bodyInput.val('');
 };
+
+    
+// function newCard(e) {
+//     e.preventDefault();
+//     var titleInput = $('.title-input').val();
+//     var bodyInput = $('.body-input').val();
+//     var qualityVariable = $('.qualityVariable').val();
+//     var bottomBox = $('.bottom-box')
+//     bottomBox.prepend (`<div class="card-container">
+//             <h2 class="title-of-card" contenteditable="true">${titleInput}</h2>
+//             <button class="delete-button" onclick="deleteIdea(event)"></button>
+//             <p class="body-of-card" contenteditable="true">${bodyInput}</p>
+//             <button type="button" class="vote-button upvote" onclick="upvote(event)"></button>
+//             <button type="button" class="vote-button downvote" onclick="downvote(event)"></button>
+//             <p class='quality'>quality:</p>
+//             <p class='qualityVariable'>swill</p>
+//             <hr> 
+//             </div>`);
+
+//     titleInput.val('');
+//     bodyInput.val('');
+// };
 
 // ====================
 // Constructor Funtion
@@ -90,9 +119,15 @@ function newCard(e) {
 
 
 // ============================= // Setting to local Storage //
-var localStoreCard = function() {     var
-cardString = JSON.stringify(cardObject());     localStorage.setItem('card' +
-numCards  , cardString); }
+
+function setIdea() {
+  var stringIdea = JSON.stringify(Idea());
+  localStorage.setItem(ideaCard, stringIdea);
+} 
+
+// var localStoreCard = function() {     var
+// cardString = JSON.stringify(cardObject());     localStorage.setItem('card' +
+// numCards  , cardString); }
 
 // ===============================
 // Retrieving from local Storage
