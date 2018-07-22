@@ -25,16 +25,12 @@ function createIdea(e) {
   e.preventDefault();
   var titleInput = $('title-input').val();
   var bodyInput = $('body-input').val();
-  var newIdea = new Idea(titleInput, bodyInput)
+  var identity = Date.now();
+  var newIdea = new Idea(titleInput, bodyInput, identity)
   setIdea(Idea);
   newCard();
 };
 
-function Idea(titleInput, bodyInput) {
-  this.titleInput = titleInput;
-  this.bodyInput = bodyInput;
-  this.id = date.now();
-};
 
 // function cardObject() {
 //         title: $('.title-input').val(),
@@ -72,15 +68,17 @@ function Idea(titleInput, bodyInput) {
     //         + '</div>';
 // };
 
-function newCard(e) {
-    e.preventDefault();
+function newCard() {
     var getIdea = localStorage.getItem('stringIdea');
     var parseGetIdea = JSON.parse(getIdea);
     var bottomBox = $('.bottom-box');
-    bottomBox.prepend (`<div class="card-container">
-            <h2 class="title-of-card" contenteditable="true">${idea.titleInput}</h2>
+    console.log(getIdea)
+    if (getIdea !== null) {
+      console.log(getIdea);
+      return bottomBox.prepend (`<div class="card-container" data-unid=${getIdea.identity}>
+            <h2 class="title-of-card" contenteditable="true">${getIdea.titleInput}</h2>
             <button class="delete-button" onclick="deleteIdea(event)"></button>
-            <p class="body-of-card" contenteditable="true">${idea.bodyInput}</p>
+            <p class="body-of-card" contenteditable="true">${getIdea.bodyInput}</p>
             <button type="button" class="vote-button upvote" onclick="upvote(event)"></button>
             <button type="button" class="vote-button downvote" onclick="downvote(event)"></button>
             <p class='quality'>quality:</p>
@@ -89,6 +87,7 @@ function newCard(e) {
             </div>`);
     titleInput.val('');
     bodyInput.val('');
+  }
 };
 
     
@@ -122,8 +121,14 @@ function newCard(e) {
 
 function setIdea() {
   var stringIdea = JSON.stringify(Idea());
-  localStorage.setItem(ideaCard, stringIdea);
-} 
+  localStorage.setItem('ideaCard', stringIdea);
+}; 
+
+function Idea(titleInput, bodyInput, identity) {
+  this.titleInput = titleInput;
+  this.bodyInput = bodyInput;
+  this.identity = identity;
+};
 
 // var localStoreCard = function() {     var
 // cardString = JSON.stringify(cardObject());     localStorage.setItem('card' +
