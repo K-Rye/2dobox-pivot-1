@@ -9,6 +9,30 @@
 // var qualityVariable = "swill";
 
 $('.save-btn').on('click', newCard)
+
+function createIdea(e) {
+  e.preventDefault();
+  var 
+}
+
+
+
+function createIdea(e) {
+  e.preventDefault();
+  var newTitle = titleInput.val();
+  var newBody = bodyInput.val();
+  var newIdea = new IdeaObject(newTitle, newBody)
+  arrayOfObject.push(newIdea);
+  stringAndStore(arrayOfObject);
+  displayIdeas();
+};
+
+function cardObject() {
+        title: $('.title-input').val(),
+        body: $('.body-input').val(),
+        quality: qualityVariable
+    };
+
 // $('.save-btn').on('click', function(event) {
 //     event.preventDefault();
 //     if ($('.title-input').val() === "" || $('.body-input').val() === "") {
@@ -55,19 +79,15 @@ function newCard(e) {
             <p class='qualityVariable'>swill</p>
             <hr> 
             </div>`);
+
+    title.val('');
+    body.val('');
 };
 
 // ====================
 // Constructor Funtion
 // ====================
 
-// function cardObject() {
-//     return {
-//         title: $('.title-input').val(),
-//         body: $('.body-input').val(),
-//         quality: qualityVariable
-//     };
-// }
 
 // ============================= // Setting to local Storage //
 var localStoreCard = function() {     var
