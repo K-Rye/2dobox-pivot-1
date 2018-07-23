@@ -23,11 +23,11 @@ $('.save-btn').on('click', createIdea)
 
 function createIdea(e) {
   e.preventDefault();
-  var titleInput = $('title-input').val();
-  var bodyInput = $('body-input').val();
-  var identity = Date.now();
-  var newIdea = new Idea(titleInput, bodyInput, identity)
-  setIdea(Idea);
+  var titleInput = $('.title-input').val();
+  var bodyInput = $('.body-input').val();
+  var id = Date.now();
+  var newIdea = new Idea(titleInput, bodyInput, id)
+  setIdea(newIdea);
   newCard();
 };
 
@@ -72,10 +72,9 @@ function newCard() {
     var getIdea = localStorage.getItem('stringIdea');
     var parseGetIdea = JSON.parse(getIdea);
     var bottomBox = $('.bottom-box');
-    console.log(getIdea)
     if (getIdea !== null) {
       console.log(getIdea);
-      return bottomBox.prepend (`<div class="card-container" data-unid=${getIdea.identity}>
+      return bottomBox.prepend (`<div class="card-container" data-unid=${getIdea.id}>
             <h2 class="title-of-card" contenteditable="true">${getIdea.titleInput}</h2>
             <button class="delete-button" onclick="deleteIdea(event)"></button>
             <p class="body-of-card" contenteditable="true">${getIdea.bodyInput}</p>
@@ -119,15 +118,15 @@ function newCard() {
 
 // ============================= // Setting to local Storage //
 
-function setIdea() {
-  var stringIdea = JSON.stringify(Idea());
-  localStorage.setItem('ideaCard', stringIdea);
+function setIdea(newIdea) {
+  var stringIdea = JSON.stringify(newIdea);
+  localStorage.setItem(newIdea.id, stringIdea);
 }; 
 
-function Idea(titleInput, bodyInput, identity) {
+function Idea(titleInput, bodyInput) {
   this.titleInput = titleInput;
   this.bodyInput = bodyInput;
-  this.identity = identity;
+  this.id = Date.now();
 };
 
 // var localStoreCard = function() {     var
