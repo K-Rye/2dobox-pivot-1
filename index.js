@@ -27,10 +27,8 @@ function createIdea(e) {
   var bodyInput = $('.body-input').val();
   var quality = $('.qualityVariable');
   var id = Date.now();
-  var newIdea = new Idea(titleInput, bodyInput, id)
-  console.log(newIdea)
+  var newIdea = new Idea(titleInput, bodyInput, id, quality)
   setIdea(newIdea);
-  getIdea()
   newCard(newIdea.id, newIdea.titleInput, newIdea.bodyInput, newIdea.quality);
 };
 
@@ -74,7 +72,7 @@ function createIdea(e) {
 function newCard(IdeaId, title, body, quality) {
   var titleInput = $('.title-input');
   var bodyInput = $('.body-input');
-  var quality = ['swill', 'probable', 'genius']
+  var quality = ['swill', 'probable', 'genius'];
     var bottomBox = $('.bottom-box'); {
         bottomBox.prepend (`<div class="card-container" data-unid=${IdeaId}>
             <h2 class="title-of-card" contenteditable="true">${title}</h2>
@@ -82,6 +80,7 @@ function newCard(IdeaId, title, body, quality) {
             <p class="body-of-card" contenteditable="true">${body}</p>
             <button type="button" class="vote-button upvote" onclick="upvote(event)"></button>
             <button type="button" class="vote-button downvote" onclick="downvote(event)"></button>
+            <p class='quality'>Quality:</p>
             <p class='qualityVariable'>${quality[0]}</p>
             <hr> 
             </div>`);
@@ -112,9 +111,17 @@ function newCard(IdeaId, title, body, quality) {
 //     bodyInput.val('');
 // };
 
-// ====================
-// Constructor Funtion
-// ====================
+$(window).on('load', retrieveIdea);
+
+
+function retrieveIdea() {
+  for (var i = 0; i < localStorage.length; i++) {
+   var retrievedIdea = localStorage.getItem(localStorage.key(i));
+   var parsedIdea = JSON.parse(retrievedIdea);
+   console.log(parsedIdea);
+   newCard(parsedIdea.id, parsedIdea.titleInput, parsedIdea.bodyInput, parsedIdea.quality);
+  };
+};
 
 
 // ============================= // Setting to local Storage //
@@ -130,6 +137,28 @@ function getIdea(newIdea) {
     newCard();
 }
 
+function editTitle(event) {
+  console.log('hi')
+    var thisArticleId = $(event.target).parent().data('unid');
+    console.log(thisArticleId);
+    var newTitle = JSON.parse(localStorage.getItem(thisArticleId));
+    var newTitleInput = $(event.target).text();
+    newTitle.titleInput = newTitleInput;
+    setIdea(newTitle);
+}
+
+function editBody(event) {
+    var thisArticleId = $(event.target).parent().data('unid');
+    var newBody = JSON.parse(localStorage.getItem(thisArticleId));
+    var newBodyInput = $(event.target).text();
+    newBody.bodyInput = newBodyInput;
+    setIdea(newBody);
+}
+
+
+$('.bottom-box').on('keyup','.body-of-card', editBody)
+$('.bottom-box').on('keyup','.title-of-card', editTitle)
+
 function Idea(titleInput, bodyInput, quality) {
   this.titleInput = titleInput;
   this.bodyInput = bodyInput;
@@ -144,6 +173,7 @@ function Idea(titleInput, bodyInput, quality) {
 // ===============================
 // Retrieving from local Storage
 // ===============================
+
 
 // $.each(localStorage, function(key) {
 //     var cardData = JSON.parse(this);
