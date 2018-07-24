@@ -8,7 +8,7 @@ function createIdea(e) {
   e.preventDefault();
   var titleInput = $('.title-input').val();
   var bodyInput = $('.body-input').val();
-  var quality = $('.qualityVariable');
+  var quality = $('.qualityVariable').text;
   var id = Date.now();
   var newIdea = new Idea(titleInput, bodyInput, id, quality)
   setIdea(newIdea);
@@ -36,9 +36,10 @@ function newCard(IdeaId, title, body, quality) {
 };
 
 function Idea(titleInput, bodyInput, quality) {
+  var qualityA = ['swill', 'probable', 'genius'];
   this.titleInput = titleInput;
   this.bodyInput = bodyInput;
-  this.quality = quality[0];
+  this.quality = qualityA[0];
   this.id = Date.now();
 };
 
