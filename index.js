@@ -109,6 +109,16 @@ function upvote(event) {
  }
 };
 
+function downvote(event) {
+  var qualityArray = ['swill', 'probable', 'genius'];
+  var qualityOutput = $(event.target.parentNode).find('.qualityVariable').get(0)
+ if ($(qualityOutput).html() == qualityArray[2]) {
+  $(qualityOutput).html(qualityArray[1]);
+ } else if ($(qualityOutput).html() == qualityArray[1]) {
+  $(qualityOutput).html(qualityArray[0]); 
+ }
+};
+
 function storeVoteUp(event) {
   var thisArticleId = $(event.target).parent().data('unid');
   var article = JSON.parse(localStorage.getItem(thisArticleId));
@@ -125,16 +135,6 @@ function storeVoteDown(event) {
   setIdea(article);
 }
 
-
-function downvote(event) {
-  var qualityArray = ['swill', 'probable', 'genius'];
-  var qualityOutput = $(event.target.parentNode).find('.qualityVariable').get(0)
- if ($(qualityOutput).html() == qualityArray[2]) {
-  $(qualityOutput).html(qualityArray[1]);
- } else if ($(qualityOutput).html() == qualityArray[1]) {
-  $(qualityOutput).html(qualityArray[0]); 
- }
-};
 
 function deleteIdea(event) {
   var ideaTarget = event.target.parentNode;
