@@ -1,8 +1,7 @@
 
 $(window).on('load', retrieveIdea);
 $('.save-btn').on('click', createIdea)
-
-$('.search-input').on('keyup', searchFunction);
+$('.search-input').on('keyup', searchCard);
 $('.bottom-box').on('keyup','.body-of-card', editBody)
 $('.bottom-box').on('keyup','.title-of-card', editTitle)
 $('.bottom-box').on('click','.upvote', storeVoteUp)
@@ -71,24 +70,26 @@ function getIdea(newIdea) {
   newCard();
 };
 
-function searchFunction() {
+function searchCard() {
   var searchText = $(this).val();
-  console.log($(this).fadeOut())
-  $('.bottom-box').each(function() {
-    if ($(this).text().search(new RegExp(searchText, "i")) < 0) {
-      $(this).fadeOut();
-      console.log($(this).fadeOut())
+  $('.card-container').each(function() {
+    var title = $(this).children('.title-of-card').text()
+    var body = $(this).children('.body-of-card').text()
+    if (title.search(new RegExp(searchText, "i")) !== -1 || body.search(new RegExp(searchText, "i")) !== -1) {
+     $(this).show();
     } else {
-      $(this).show();
+      $(this).hide();
     }
   })
 };
-    var thisArticleId = $(event.target).parent().data('unid');
-    var newTitle = JSON.parse(localStorage.getItem(thisArticleId));
-    var newTitleInput = $(event.target).text();
-    newTitle.titleInput = newTitleInput;
-    setIdea(newTitle);
-}
+
+function editTitle(event) {
+  var thisArticleId = $(event.target).parent().data('unid');
+  var newTitle = JSON.parse(localStorage.getItem(thisArticleId));
+  var newTitleInput = $(event.target).text();
+  newTitle.titleInput = newTitleInput;
+  setIdea(newTitle);
+};
 
 function editBody(event) {
   var thisArticleId = $(event.target).parent().data('unid');
