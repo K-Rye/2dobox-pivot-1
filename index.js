@@ -13,8 +13,14 @@ function createIdea(e) {
   var quality = $('.qualityVariable').text;
   var id = Date.now();
   var newIdea = new Idea(titleInput, bodyInput, id, quality)
+  var savebtn = $('.savebtn')
+    if(titleInput.length < 1 || bodyInput.length < 1) {
+      savebtn.disabled = true;
+    } else {
+      savebtn.disabled = false;
   setIdea(newIdea);
   newCard(newIdea.id, newIdea.titleInput, newIdea.bodyInput, newIdea.quality);
+}
 };
 
 function newCard(IdeaId, title, body, quality) {
@@ -48,14 +54,12 @@ function retrieveIdea() {
   for (var i = 0; i < localStorage.length; i++) {
    var retrievedIdea = localStorage.getItem(localStorage.key(i));
    var parsedIdea = JSON.parse(retrievedIdea);
-   console.log(parsedIdea);
    newCard(parsedIdea.id, parsedIdea.titleInput, parsedIdea.bodyInput, parsedIdea.quality);
   };
 };
 
 function setIdea(newIdea) {
   var stringIdea = JSON.stringify(newIdea);
-  console.log('New Idea'+ stringIdea);
   localStorage.setItem(newIdea.id, stringIdea);
 }; 
 
@@ -90,21 +94,13 @@ function upvote(event) {
  } else if ($(qualityOutput).html() == qualityArray[1]) {
    $(qualityOutput).html(qualityArray[2]);
  }
-  // var ideaUp = qualityArray[];
-  // var stringIdeaUp = JSON.stringify(ideaUp);
-  // localStorage.setItem(ideaUp.id, stringIdeaUp);
-
-
 };
 
 function storeVoteUp(event) {
   var thisArticleId = $(event.target).parent().data('unid');
   var article = JSON.parse(localStorage.getItem(thisArticleId));
   var currentVote = $(event.target).parent().find('.qualityVariable').text();
-  console.log(currentVote);
-  console.log(article);
   article.quality = currentVote;
-  console.log(article);
   setIdea(article);
 }
 
@@ -112,10 +108,7 @@ function storeVoteDown(event) {
   var thisArticleId = $(event.target).parent().data('unid');
   var article = JSON.parse(localStorage.getItem(thisArticleId));
   var currentVote = $(event.target).parent().find('.qualityVariable').text();
-  console.log(currentVote);
-  console.log(article);
   article.quality = currentVote;
-  console.log(article);
   setIdea(article);
 }
 

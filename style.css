@@ -34,11 +34,11 @@ p {
 
 .quality {
     display: inline-block;
-    margin-left: .5rem;
+    color: #939598;
     font-size: 1em;
     font-weight: bold;
-    color: #939598;
     font-family: 'Open Sans', sans-serif;
+    margin-left: .5rem;
 }
 
 .qualityVariable {
@@ -182,8 +182,23 @@ h2 {
 
 @media(max-width: 640px){
 
+    .title-input {
+        width: 85%;
+    }
+
+    .body-input {
+        width: 85%;
+    }
+    .save-btn {
+        width: 85%;
+    }
+
+    .search-input {
+        width: 85%;
+    }
+
     .card-container {
-        width: 45%;
+        width: 85%;
     }
 
     .search-input {
