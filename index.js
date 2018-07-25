@@ -1,8 +1,7 @@
 
 $(window).on('load', retrieveIdea);
 $('.save-btn').on('click', createIdea)
-
-$('.search-input').on('keyup', searchFunction);
+$('.search-input').on('keyup', searchCard);
 $('.bottom-box').on('keyup','.body-of-card', editBody)
 $('.bottom-box').on('keyup','.title-of-card', editTitle)
 
@@ -49,7 +48,6 @@ function retrieveIdea() {
   for (var i = 0; i < localStorage.length; i++) {
    var retrievedIdea = localStorage.getItem(localStorage.key(i));
    var parsedIdea = JSON.parse(retrievedIdea);
-   console.log(parsedIdea);
    newCard(parsedIdea.id, parsedIdea.titleInput, parsedIdea.bodyInput, parsedIdea.quality);
   };
 };
@@ -65,22 +63,21 @@ function getIdea(newIdea) {
   newCard();
 };
 
-function searchFunction() {
+function searchCard() {
   var searchText = $(this).val();
-  console.log($(this).fadeOut())
-  $('.bottom-box').each(function() {
-    if ($(this).text().search(new RegExp(searchText, "i")) < 0) {
-      $(this).fadeOut();
-      console.log($(this).fadeOut())
+  $('.card-container').each(function() {
+    var title = $(this).children('.title-of-card').text()
+    var body = $(this).children('.body-of-card').text()
+    if (title.search(new RegExp(searchText, "i")) !== -1 || body.search(new RegExp(searchText, "i")) !== -1) {
+     $(this).show();
     } else {
-      $(this).show();
+      $(this).hide();
     }
   })
 };
 
 function editTitle(event) {
   var thisArticleId = $(event.target).parent().data('unid');
-  console.log(thisArticleId);
   var newTitle = JSON.parse(localStorage.getItem(thisArticleId));
   var newTitleInput = $(event.target).text();
   newTitle.titleInput = newTitleInput;
