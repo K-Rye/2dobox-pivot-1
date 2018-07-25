@@ -3,6 +3,8 @@ $('.save-btn').on('click', createIdea)
 $(window).on('load', retrieveIdea);
 $('.bottom-box').on('keyup','.body-of-card', editBody)
 $('.bottom-box').on('keyup','.title-of-card', editTitle)
+$('.bottom-box').on('click','.upvote', storeVoteUp)
+$('.bottom-box').on('click','.downvote', storeVoteDown)
 
 function createIdea(e) {
   e.preventDefault();
@@ -18,8 +20,7 @@ function createIdea(e) {
 function newCard(IdeaId, title, body, quality) {
   var titleInput = $('.title-input');
   var bodyInput = $('.body-input');
-  var quality = ['swill', 'probable', 'genius'];
-    var bottomBox = $('.bottom-box'); {
+  var bottomBox = $('.bottom-box'); {
         bottomBox.prepend (`<div class="card-container" data-unid=${IdeaId}>
             <h2 class="title-of-card" contenteditable="true">${title}</h2>
             <button class="delete-button" onclick="deleteIdea(event)"></button>
@@ -27,7 +28,7 @@ function newCard(IdeaId, title, body, quality) {
             <button type="button" class="vote-button upvote" onclick="upvote(event)"></button>
             <button type="button" class="vote-button downvote" onclick="downvote(event)"></button>
             <p class='quality'>Quality:</p>
-            <p class='qualityVariable'>${quality[0]}</p>
+            <p class='qualityVariable'>${quality}</p>
             <hr> 
             </div>`);
     titleInput.val('');
@@ -39,7 +40,7 @@ function Idea(titleInput, bodyInput, quality) {
   var qualityA = ['swill', 'probable', 'genius'];
   this.titleInput = titleInput;
   this.bodyInput = bodyInput;
-  this.quality = qualityA[0];
+  this.quality = 'swill';
   this.id = Date.now();
 };
 
@@ -54,6 +55,7 @@ function retrieveIdea() {
 
 function setIdea(newIdea) {
   var stringIdea = JSON.stringify(newIdea);
+  console.log('New Idea'+ stringIdea);
   localStorage.setItem(newIdea.id, stringIdea);
 }; 
 
@@ -66,7 +68,6 @@ function getIdea(newIdea) {
 function editTitle(event) {
 
     var thisArticleId = $(event.target).parent().data('unid');
-    console.log(thisArticleId);
     var newTitle = JSON.parse(localStorage.getItem(thisArticleId));
     var newTitleInput = $(event.target).text();
     newTitle.titleInput = newTitleInput;
@@ -89,7 +90,35 @@ function upvote(event) {
  } else if ($(qualityOutput).html() == qualityArray[1]) {
    $(qualityOutput).html(qualityArray[2]);
  }
+  // var ideaUp = qualityArray[];
+  // var stringIdeaUp = JSON.stringify(ideaUp);
+  // localStorage.setItem(ideaUp.id, stringIdeaUp);
+
+
 };
+
+function storeVoteUp(event) {
+  var thisArticleId = $(event.target).parent().data('unid');
+  var article = JSON.parse(localStorage.getItem(thisArticleId));
+  var currentVote = $(event.target).parent().find('.qualityVariable').text();
+  console.log(currentVote);
+  console.log(article);
+  article.quality = currentVote;
+  console.log(article);
+  setIdea(article);
+}
+
+function storeVoteDown(event) {
+  var thisArticleId = $(event.target).parent().data('unid');
+  var article = JSON.parse(localStorage.getItem(thisArticleId));
+  var currentVote = $(event.target).parent().find('.qualityVariable').text();
+  console.log(currentVote);
+  console.log(article);
+  article.quality = currentVote;
+  console.log(article);
+  setIdea(article);
+}
+
 
 function downvote(event) {
   var qualityArray = ['swill', 'probable', 'genius'];
@@ -103,7 +132,10 @@ function downvote(event) {
 
 function deleteIdea(event) {
   var ideaTarget = event.target.parentNode;
+  var thisArticleId = $(event.target).parent().data('unid');
   ideaTarget.parentNode.removeChild(ideaTarget);
+  localStorage.removeItem(thisArticleId);
+
 };
 
 
