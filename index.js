@@ -5,6 +5,8 @@ $('.save-btn').on('click', createIdea)
 $('.search-input').on('keyup', searchFunction);
 $('.bottom-box').on('keyup','.body-of-card', editBody)
 $('.bottom-box').on('keyup','.title-of-card', editTitle)
+$('.bottom-box').on('click','.upvote', storeVoteUp)
+$('.bottom-box').on('click','.downvote', storeVoteDown)
 
 function createIdea(e) {
   e.preventDefault();
@@ -13,23 +15,28 @@ function createIdea(e) {
   var quality = $('.qualityVariable').text;
   var id = Date.now();
   var newIdea = new Idea(titleInput, bodyInput, id, quality)
+  var savebtn = $('.savebtn')
+    if(titleInput.length < 1 || bodyInput.length < 1) {
+      savebtn.disabled = true;
+    } else {
+      savebtn.disabled = false;
   setIdea(newIdea);
   newCard(newIdea.id, newIdea.titleInput, newIdea.bodyInput, newIdea.quality);
+}
 };
 
 function newCard(IdeaId, title, body, quality) {
   var titleInput = $('.title-input');
   var bodyInput = $('.body-input');
-  var quality = ['swill', 'probable', 'genius'];
-    var bottomBox = $('.bottom-box'); {
+  var bottomBox = $('.bottom-box'); {
         bottomBox.prepend (`<div class="card-container" data-unid=${IdeaId}>
-            <h2 class="title-of-card" contenteditable="true">${title}</h2>
+            <h2 role='title' class="title-of-card" contenteditable="true">${title}</h2>
             <button class="delete-button" onclick="deleteIdea(event)"></button>
             <p class="body-of-card" contenteditable="true">${body}</p>
             <button type="button" class="vote-button upvote" onclick="upvote(event)"></button>
             <button type="button" class="vote-button downvote" onclick="downvote(event)"></button>
             <p class='quality'>Quality:</p>
-            <p class='qualityVariable'>${quality[0]}</p>
+            <p class='qualityVariable'>${quality}</p>
             <hr> 
             </div>`);
     titleInput.val('');
@@ -41,7 +48,7 @@ function Idea(titleInput, bodyInput, quality) {
   var qualityA = ['swill', 'probable', 'genius'];
   this.titleInput = titleInput;
   this.bodyInput = bodyInput;
-  this.quality = qualityA[0];
+  this.quality = 'swill';
   this.id = Date.now();
 };
 
@@ -49,7 +56,6 @@ function retrieveIdea() {
   for (var i = 0; i < localStorage.length; i++) {
    var retrievedIdea = localStorage.getItem(localStorage.key(i));
    var parsedIdea = JSON.parse(retrievedIdea);
-   console.log(parsedIdea);
    newCard(parsedIdea.id, parsedIdea.titleInput, parsedIdea.bodyInput, parsedIdea.quality);
   };
 };
@@ -77,15 +83,12 @@ function searchFunction() {
     }
   })
 };
-
-function editTitle(event) {
-  var thisArticleId = $(event.target).parent().data('unid');
-  console.log(thisArticleId);
-  var newTitle = JSON.parse(localStorage.getItem(thisArticleId));
-  var newTitleInput = $(event.target).text();
-  newTitle.titleInput = newTitleInput;
-  setIdea(newTitle);
-};
+    var thisArticleId = $(event.target).parent().data('unid');
+    var newTitle = JSON.parse(localStorage.getItem(thisArticleId));
+    var newTitleInput = $(event.target).text();
+    newTitle.titleInput = newTitleInput;
+    setIdea(newTitle);
+}
 
 function editBody(event) {
   var thisArticleId = $(event.target).parent().data('unid');
@@ -105,6 +108,23 @@ function upvote(event) {
  }
 };
 
+function storeVoteUp(event) {
+  var thisArticleId = $(event.target).parent().data('unid');
+  var article = JSON.parse(localStorage.getItem(thisArticleId));
+  var currentVote = $(event.target).parent().find('.qualityVariable').text();
+  article.quality = currentVote;
+  setIdea(article);
+}
+
+function storeVoteDown(event) {
+  var thisArticleId = $(event.target).parent().data('unid');
+  var article = JSON.parse(localStorage.getItem(thisArticleId));
+  var currentVote = $(event.target).parent().find('.qualityVariable').text();
+  article.quality = currentVote;
+  setIdea(article);
+}
+
+
 function downvote(event) {
   var qualityArray = ['swill', 'probable', 'genius'];
   var qualityOutput = $(event.target.parentNode).find('.qualityVariable').get(0)
@@ -117,7 +137,10 @@ function downvote(event) {
 
 function deleteIdea(event) {
   var ideaTarget = event.target.parentNode;
+  var thisArticleId = $(event.target).parent().data('unid');
   ideaTarget.parentNode.removeChild(ideaTarget);
+  localStorage.removeItem(thisArticleId);
+
 };
 
 
