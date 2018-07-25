@@ -22,7 +22,7 @@ function newCard(IdeaId, title, body, quality) {
   var bodyInput = $('.body-input');
   var bottomBox = $('.bottom-box'); {
         bottomBox.prepend (`<div class="card-container" data-unid=${IdeaId}>
-            <h2 class="title-of-card" contenteditable="true">${title}</h2>
+            <h2 role='title' class="title-of-card" contenteditable="true">${title}</h2>
             <button class="delete-button" onclick="deleteIdea(event)"></button>
             <p class="body-of-card" contenteditable="true">${body}</p>
             <button type="button" class="vote-button upvote" onclick="upvote(event)"></button>

@@ -183,7 +183,7 @@ h2 {
 @media(max-width: 640px){
 
     .card-container {
-        width: 85%;
+        width: 45%;
     }
 
     .search-input {
