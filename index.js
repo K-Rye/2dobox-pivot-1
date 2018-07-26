@@ -44,7 +44,7 @@ function newCard(IdeaId, title, body, quality) {
 };
 
 function Idea(titleInput, bodyInput, quality) {
-  var qualityA = ['swill', 'probable', 'genius'];
+  // var qualityA = ['swill', 'probable', 'genius'];
   this.titleInput = titleInput;
   this.bodyInput = bodyInput;
   this.quality = 'swill';
