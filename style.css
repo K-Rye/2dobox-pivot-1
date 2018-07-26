@@ -6,7 +6,7 @@ body {
 }
 
 h1 {
-    color: #6d6e71;
+    color: #61433B;
     display: inline-block;
     font-size: 275%;
     margin-bottom:  30px;
@@ -53,7 +53,7 @@ p {
 }
 
 .top-box {
-    background-color: #e5f3f2;
+    background-color: #D9D9DB;
     box-sizing: border-box;
     height: 300px;
     margin: 0;
@@ -65,7 +65,11 @@ p {
 }
 
 .idea {
-    color: #00a79d;
+    color: #92474E;
+}
+
+.box {
+    color: #697E95;
 }
 
 .title-input {
@@ -91,7 +95,7 @@ p {
 }
 
 .save-btn {
-    background-color: #00a79d;
+    background-color: #92474E;
     border: none;
     color: #fff;
     font-size: 120%;
